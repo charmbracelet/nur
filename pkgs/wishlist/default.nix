@@ -3,26 +3,25 @@
 { system ? builtins.currentSystem, pkgs, lib, fetchurl, installShellFiles }:
 let
   shaMap = {
-    i686-linux = "12pl9s809ka1lvp2nc76n9a36vjgw1nqjgd5k9gn836p4lm08aw8";
-    x86_64-linux = "1w3ymzc5fydl0agb3fycvajxi621bya55lfv6kfvrfhp1bfg1n7q";
-    armv7l-linux = "161nzhpyqqz2k4a1p363raxjvhgfp2mx2v3pa1lhj57084zn8s4l";
-    aarch64-linux = "1zzs247rhgpzskmrac1lvxcplz064gqzpyg7an3zhiqw4yhkhslv";
-    x86_64-darwin = "0gk7qmgpbvhvqvbis0932p45v2hblp84c78zr2r6cmp139c0bhmx";
-    aarch64-darwin = "10sr29gzsv8dqj6a0dg54ws8avp8l8w5ll15filszwsixycfkp6j";
+    i686-linux = "19f7z0b132affrndls2hi23ckx9zzyyn11k1gmg7v02klz22ggnr";
+    x86_64-linux = "17s16kgw9fg4fsw50iyqfyqbijk40xaqr87vzks44c9jmpv84vp4";
+    armv7l-linux = "1dld7zgisrlsbb27000w3fix36449308zjwhfh6h5dk5sm1cpkj3";
+    aarch64-linux = "0y0xb0kfsnymq6wfzjfragx644a81j64a6i8hwx1dpc5hghmh469";
+    x86_64-darwin = "1pzvvvziwrl17g7n9j7327w8cwimv1dh3d15b28aflvbs9n02hkp";
+    aarch64-darwin = "0gxwc4xkik2paknaq8zhmf4lss584kb75lvghfr48v8vrnz20zcw";
   };
 
   urlMap = {
-    i686-linux = "https://github.com/charmbracelet/wishlist/releases/download/v0.12.0/wishlist_0.12.0_Linux_i386.tar.gz";
-    x86_64-linux = "https://github.com/charmbracelet/wishlist/releases/download/v0.12.0/wishlist_0.12.0_Linux_x86_64.tar.gz";
-    armv7l-linux = "https://github.com/charmbracelet/wishlist/releases/download/v0.12.0/wishlist_0.12.0_Linux_arm.tar.gz";
-    aarch64-linux = "https://github.com/charmbracelet/wishlist/releases/download/v0.12.0/wishlist_0.12.0_Linux_arm64.tar.gz";
-    x86_64-darwin = "https://github.com/charmbracelet/wishlist/releases/download/v0.12.0/wishlist_0.12.0_Darwin_x86_64.tar.gz";
-    aarch64-darwin = "https://github.com/charmbracelet/wishlist/releases/download/v0.12.0/wishlist_0.12.0_Darwin_arm64.tar.gz";
+    i686-linux = "https://github.com/charmbracelet/wishlist/releases/download/v0.13.0/wishlist_0.13.0_Linux_i386.tar.gz";
+    x86_64-linux = "https://github.com/charmbracelet/wishlist/releases/download/v0.13.0/wishlist_0.13.0_Linux_x86_64.tar.gz";
+    armv7l-linux = "https://github.com/charmbracelet/wishlist/releases/download/v0.13.0/wishlist_0.13.0_Linux_arm.tar.gz";
+    aarch64-linux = "https://github.com/charmbracelet/wishlist/releases/download/v0.13.0/wishlist_0.13.0_Linux_arm64.tar.gz";
+    x86_64-darwin = "https://github.com/charmbracelet/wishlist/releases/download/v0.13.0/wishlist_0.13.0_Darwin_x86_64.tar.gz";
+    aarch64-darwin = "https://github.com/charmbracelet/wishlist/releases/download/v0.13.0/wishlist_0.13.0_Darwin_arm64.tar.gz";
   };
-in
-pkgs.stdenv.mkDerivation {
+in pkgs.stdenv.mkDerivation {
   pname = "wishlist";
-  version = "0.12.0";
+  version = "0.13.0";
   src = fetchurl {
     url = urlMap.${system};
     sha256 = shaMap.${system};
