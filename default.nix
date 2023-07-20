@@ -15,4 +15,6 @@
   overlays = import ./overlays; # nixpkgs overlays
 
   wishlist = pkgs.callPackage ./pkgs/wishlist { };
+  soft-server = pkgs.callPackage ./pkgs/soft-server { };
+  pop = pkgs.callPackage ./pkgs/pop { };
 }
