@@ -17,4 +17,5 @@
   wishlist = pkgs.callPackage ./pkgs/wishlist { };
   soft-serve = pkgs.callPackage ./pkgs/soft-serve { };
   pop = pkgs.callPackage ./pkgs/pop { };
+  gum = pkgs.callPackage ./pkgs/gum { };
 }
