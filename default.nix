@@ -18,4 +18,5 @@
   soft-serve = pkgs.callPackage ./pkgs/soft-serve { };
   pop = pkgs.callPackage ./pkgs/pop { };
   gum = pkgs.callPackage ./pkgs/gum { };
+  vhs = pkgs.callPackage ./pkgs/vhs { };
 }
