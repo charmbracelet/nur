@@ -14,9 +14,10 @@
   modules = import ./modules; # NixOS modules
   overlays = import ./overlays; # nixpkgs overlays
 
-  wishlist = pkgs.callPackage ./pkgs/wishlist { };
-  soft-serve = pkgs.callPackage ./pkgs/soft-serve { };
-  pop = pkgs.callPackage ./pkgs/pop { };
+  charm = pkgs.callPackage ./pkgs/charm { };
   gum = pkgs.callPackage ./pkgs/gum { };
+  pop = pkgs.callPackage ./pkgs/pop { };
+  soft-serve = pkgs.callPackage ./pkgs/soft-serve { };
   vhs = pkgs.callPackage ./pkgs/vhs { };
+  wishlist = pkgs.callPackage ./pkgs/wishlist { };
 }
