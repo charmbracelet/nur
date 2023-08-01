@@ -3,25 +3,25 @@
 { system ? builtins.currentSystem, pkgs, lib, fetchurl, installShellFiles }:
 let
   shaMap = {
-    i686-linux = "1p9qdp3b8jy5sidbdqls9m6fldaka1cl5187k28z0zp1gl57n8v5";
-    x86_64-linux = "07d5kpm8d6v7rf2giz7zx2sm95wki2crm3rayg3knx01x8n64aqr";
-    armv7l-linux = "1b65ibh28y0s7ljk15hk4x0l1wgk154f7b357a7gkrgrmidgf169";
-    aarch64-linux = "0vl4v72mnzlybws5myk2ihqy4037sq2jgzd8r1fa478ijwr2a10f";
-    x86_64-darwin = "1d4c4kmd3cil1pf382d00h80r0mzz0wcr7ynsx0k6gqfnjjpis8s";
-    aarch64-darwin = "0bkjf5y5pffgqb6nn02a3vmcajxijzpgh15wl9fb8axfkiga25pf";
+    i686-linux = "1v245dir46jr2i6pgzbcifzgk31av58a6ix6yqbnwbmkid796qvn";
+    x86_64-linux = "1npsrd66d2ydv9qzkdslcaj7n34hqi1g13niwv7cdrnvaijnv9vc";
+    armv7l-linux = "1l62yf5c8rryyia46rnp3f7l5dhy701g7cpn8bf09dc36pg4yx4d";
+    aarch64-linux = "0454p79l4iliswvng5rz00gcs14yjlqbrwqar3kj6c6s3wv7gsfy";
+    x86_64-darwin = "1c8ddsj5fvrlbvdas4q4yflvayzy1v17zxfkdjgnna684mly4zgp";
+    aarch64-darwin = "1ddy3s32hl5yylq9mglrbjgchana2mghidbzi7l1grwi6jmxnnsi";
   };
 
   urlMap = {
-    i686-linux = "https://github.com/charmbracelet/pop/releases/download/v0.1.0/pop_0.1.0_Linux_i386.tar.gz";
-    x86_64-linux = "https://github.com/charmbracelet/pop/releases/download/v0.1.0/pop_0.1.0_Linux_x86_64.tar.gz";
-    armv7l-linux = "https://github.com/charmbracelet/pop/releases/download/v0.1.0/pop_0.1.0_Linux_arm.tar.gz";
-    aarch64-linux = "https://github.com/charmbracelet/pop/releases/download/v0.1.0/pop_0.1.0_Linux_arm64.tar.gz";
-    x86_64-darwin = "https://github.com/charmbracelet/pop/releases/download/v0.1.0/pop_0.1.0_Darwin_x86_64.tar.gz";
-    aarch64-darwin = "https://github.com/charmbracelet/pop/releases/download/v0.1.0/pop_0.1.0_Darwin_arm64.tar.gz";
+    i686-linux = "https://github.com/charmbracelet/pop/releases/download/v0.2.0/pop_0.2.0_Linux_i386.tar.gz";
+    x86_64-linux = "https://github.com/charmbracelet/pop/releases/download/v0.2.0/pop_0.2.0_Linux_x86_64.tar.gz";
+    armv7l-linux = "https://github.com/charmbracelet/pop/releases/download/v0.2.0/pop_0.2.0_Linux_arm.tar.gz";
+    aarch64-linux = "https://github.com/charmbracelet/pop/releases/download/v0.2.0/pop_0.2.0_Linux_arm64.tar.gz";
+    x86_64-darwin = "https://github.com/charmbracelet/pop/releases/download/v0.2.0/pop_0.2.0_Darwin_x86_64.tar.gz";
+    aarch64-darwin = "https://github.com/charmbracelet/pop/releases/download/v0.2.0/pop_0.2.0_Darwin_arm64.tar.gz";
   };
 in pkgs.stdenv.mkDerivation {
   pname = "pop";
-  version = "0.1.0";
+  version = "0.2.0";
   src = fetchurl {
     url = urlMap.${system};
     sha256 = shaMap.${system};
