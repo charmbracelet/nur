@@ -57,3 +57,13 @@ jobs:
 
           echo "}" >> default.nix
           echo "default.nix generated successfully"
+
+      - name: Open pull request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: "Update NUR packages"
+          title: "Update NUR packages"
+          body: "This PR updates the NUR packages in the repository."
+          branch: "update-nur-packages"
+          base: "main"
+          paths: "default.nix"
