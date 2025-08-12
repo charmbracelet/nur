@@ -1,3 +1,24 @@
+#!/usr/bin/env nix-shell
+#!nix-shell -i bash -p jq curl alejandra
+
+set -euo pipefail
+
+# Fetch the JSON schema
+SCHEMA_URL="https://charm.land/crush.json"
+SCHEMA=$(curl -s "$SCHEMA_URL")
+
+# Extract enum values for provider types
+PROVIDER_TYPES=$(echo "$SCHEMA" | jq -r '.["$defs"].ProviderConfig.properties.type.enum[]' | sed 's/^/                  "/' | sed 's/$/"/')
+
+# Extract enum values for MCP types
+MCP_TYPES=$(echo "$SCHEMA" | jq -r '.["$defs"].MCPConfig.properties.type.enum[]' | sed 's/^/                  "/' | sed 's/$/"/')
+
+# Extract enum values for reasoning effort
+REASONING_EFFORTS=$(echo "$SCHEMA" | jq -r '.["$defs"].SelectedModel.properties.reasoning_effort.enum[]' | sed 's/^/                  "/' | sed 's/$/"/')
+
+# Generate the Nix file to temporary location
+TEMP_FILE=$(mktemp)
+cat << EOF > "$TEMP_FILE"
 {lib}:
 lib.mkOption {
   type = lib.types.submodule {
@@ -21,11 +42,7 @@ lib.mkOption {
               };
               type = lib.mkOption {
                 type = lib.types.enum [
-                  "openai"
-                  "anthropic"
-                  "gemini"
-                  "azure"
-                  "vertexai"
+$PROVIDER_TYPES
                 ];
                 default = "openai";
                 description = "Provider type that determines the API format";
@@ -181,9 +198,7 @@ lib.mkOption {
               };
               type = lib.mkOption {
                 type = lib.types.enum [
-                  "stdio"
-                  "sse"
-                  "http"
+$MCP_TYPES
                 ];
                 default = "stdio";
                 description = "Type of MCP connection";
@@ -285,9 +300,7 @@ lib.mkOption {
               };
               reasoning_effort = lib.mkOption {
                 type = lib.types.enum [
-                  "low"
-                  "medium"
-                  "high"
+$REASONING_EFFORTS
                 ];
                 default = "";
                 description = "Reasoning effort level for OpenAI models that support it";
@@ -312,3 +325,9 @@ lib.mkOption {
   };
   default = {};
 }
+EOF
+
+# Format with alejandra and output
+alejandra "$TEMP_FILE"
+cat "$TEMP_FILE"
+rm "$TEMP_FILE"
