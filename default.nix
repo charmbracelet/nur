@@ -21,6 +21,7 @@
   freeze = pkgs.callPackage ./pkgs/freeze { };
   glow = pkgs.callPackage ./pkgs/glow { };
   gum = pkgs.callPackage ./pkgs/gum { };
+  markscribe = pkgs.callPackage ./pkgs/markscribe { };
   melt = pkgs.callPackage ./pkgs/melt { };
   mods = pkgs.callPackage ./pkgs/mods { };
   pop = pkgs.callPackage ./pkgs/pop { };
