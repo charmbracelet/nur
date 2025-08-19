@@ -3,7 +3,7 @@ name: update NUR packages
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   update-pkgs:
@@ -65,5 +65,5 @@ jobs:
           title: "Update NUR packages"
           body: "This PR updates the NUR packages in the repository."
           branch: "update-nur-packages"
-          base: "main"
+          base: "master"
           paths: "default.nix"
