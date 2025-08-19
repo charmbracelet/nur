@@ -1,3 +1,5 @@
+# This file is generated DO NOT EDIT!
+#
 # This file describes your repository contents.
 # It should return a set of nix derivations
 # and optionally the special attributes `lib`, `modules` and `overlays`.
