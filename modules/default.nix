@@ -1,7 +1,7 @@
 {
   # NixOS modules
-  nixos = ./nixos.nix;
+  nixos = import ./nixos.nix;
 
   # Home Manager modules
-  home = ./home.nix;
+  home = import ./home.nix;
 }
