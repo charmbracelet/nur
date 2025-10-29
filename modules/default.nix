@@ -1,7 +1,7 @@
 {
   # NixOS modules
-  nixosModules.crush = ./crush/nixos.nix;
+  nixos = ./nixos.nix;
 
   # Home Manager modules
-  homeModules.crush = ./crush/home-manager.nix;
+  home = ./home.nix;
 }
