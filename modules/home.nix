@@ -1,3 +1,3 @@
 {
-  crush-hm = ./crush/home-manager.nix;
+  crush = ./crush/home-manager.nix;
 }
