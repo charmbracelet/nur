@@ -3,13 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
-  crushOptions = import ./options.nix {inherit lib;};
+}:
+let
+  options = import ./options.nix {inherit lib;};
 in {
-  options.programs.crush = {
-    enable = lib.mkEnableOption "Enable crush";
-    settings = crushOptions;
-  };
+  inherit options;
 
   config = lib.mkIf config.programs.crush.enable {
     home.packages = [(pkgs.callPackage ../../pkgs/crush {})];
