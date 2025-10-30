@@ -7,7 +7,7 @@
 let
   cfg = config.programs.crush;
 in {
-  options = import ./options.nix { inherit pkgs; };
+  options = import ./options { inherit pkgs; };
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [ cfg.package ];
