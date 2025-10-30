@@ -31,7 +31,7 @@ outputs = { self, nixpkgs, nur, ... }:
 }
 ```
 
-### Home Manager
+#### Home Manager
 
 Add the flake as an input and include the desired module in your Home Manager configuration:
 
