@@ -5,10 +5,9 @@
   ...
 }:
 let
-  options = import ./options.nix {inherit pkgs;};
   cfg = config.programs.crush;
 in {
-  inherit options;
+  options = import ./options.nix {inherit pkgs;};
 
   config = lib.mkIf cfg.enable {
     home.packages = [ cfg.package ];
