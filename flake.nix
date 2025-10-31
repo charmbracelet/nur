@@ -29,6 +29,6 @@
       );
 
       nixosModules = modules.nixos;
-      homeModules = modules.home;
+      homeModules = modules.homeManager;
     };
 }
