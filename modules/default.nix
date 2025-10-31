@@ -1,7 +1,7 @@
 {
   # NixOS modules
-  crush = ./crush/nixos.nix;
+  nixosModules.crush = ./crush/nixos.nix;
 
   # Home Manager modules
-  crush-hm = ./crush/home-manager.nix;
+  homeModules.crush = ./crush/home-manager.nix;
 }
