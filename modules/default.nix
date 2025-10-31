@@ -3,5 +3,5 @@
   nixos = import ./nixos.nix;
 
   # Home Manager modules
-  home = import ./home.nix;
+  homeManager = import ./home.nix;
 }
