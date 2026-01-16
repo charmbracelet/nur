@@ -3,6 +3,136 @@
 lib.mkOption {
   type = lib.types.submodule {
     options = {
+      lsp = lib.mkOption {
+        type = lib.types.attrsOf (
+          lib.types.submodule {
+            options = {
+              args = lib.mkOption {
+                type = lib.types.nullOr lib.types.listOf lib.types.str;
+                default = null;
+                description = "Arguments to pass to the LSP server command";
+              };
+
+              command = lib.mkOption {
+                type = lib.types.nullOr lib.types.str;
+                default = null;
+                description = "Command to execute for the LSP server";
+              };
+
+              disabled = lib.mkOption {
+                type = lib.types.nullOr lib.types.bool;
+                default = false;
+                description = "Whether this LSP server is disabled";
+              };
+
+              env = lib.mkOption {
+                type = lib.types.nullOr lib.types.attrsOf lib.types.anything;
+                default = null;
+                description = "Environment variables to set to the LSP server command";
+              };
+
+              filetypes = lib.mkOption {
+                type = lib.types.nullOr lib.types.listOf lib.types.str;
+                default = null;
+                description = "File types this LSP server handles";
+              };
+
+              init_options = lib.mkOption {
+                type = lib.types.nullOr lib.types.attrsOf lib.types.anything;
+                default = null;
+                description = "Initialization options passed to the LSP server during initialize request";
+              };
+
+              options = lib.mkOption {
+                type = lib.types.nullOr lib.types.attrsOf lib.types.anything;
+                default = null;
+                description = "LSP server-specific settings passed during initialization";
+              };
+
+              root_markers = lib.mkOption {
+                type = lib.types.nullOr lib.types.listOf lib.types.str;
+                default = null;
+                description = "Files or directories that indicate the project root";
+              };
+
+            };
+          }
+        );
+        default = { };
+        description = "Language Server Protocol configurations";
+      };
+
+      mcp = lib.mkOption {
+        type = lib.types.attrsOf (
+          lib.types.submodule {
+            options = {
+              args = lib.mkOption {
+                type = lib.types.nullOr lib.types.listOf lib.types.str;
+                default = null;
+                description = "Arguments to pass to the MCP server command";
+              };
+
+              command = lib.mkOption {
+                type = lib.types.nullOr lib.types.str;
+                default = null;
+                description = "Command to execute for stdio MCP servers";
+              };
+
+              disabled = lib.mkOption {
+                type = lib.types.nullOr lib.types.bool;
+                default = false;
+                description = "Whether this MCP server is disabled";
+              };
+
+              disabled_tools = lib.mkOption {
+                type = lib.types.nullOr lib.types.listOf lib.types.str;
+                default = null;
+                description = "List of tools from this MCP server to disable";
+              };
+
+              env = lib.mkOption {
+                type = lib.types.nullOr lib.types.attrsOf lib.types.anything;
+                default = null;
+                description = "Environment variables to set for the MCP server";
+              };
+
+              headers = lib.mkOption {
+                type = lib.types.nullOr lib.types.attrsOf lib.types.anything;
+                default = null;
+                description = "HTTP headers for HTTP/SSE MCP servers";
+              };
+
+              timeout = lib.mkOption {
+                type = lib.types.nullOr lib.types.int;
+                default = 15;
+                description = "Timeout in seconds for MCP server connections";
+              };
+
+              type = lib.mkOption {
+                type = lib.types.nullOr (
+                  lib.types.enum [
+                    "stdio"
+                    "sse"
+                    "http"
+                  ]
+                );
+                default = "stdio";
+                description = "Type of MCP connection";
+              };
+
+              url = lib.mkOption {
+                type = lib.types.nullOr lib.types.str;
+                default = null;
+                description = "URL for HTTP or SSE MCP servers";
+              };
+
+            };
+          }
+        );
+        default = { };
+        description = "Model Context Protocol server configurations";
+      };
+
       models = lib.mkOption {
         type = lib.types.attrsOf (
           lib.types.submodule {
@@ -11,24 +141,6 @@ lib.mkOption {
                 type = lib.types.nullOr lib.types.number;
                 default = null;
                 description = "Frequency penalty to reduce repetition";
-              };
-
-              temperature = lib.mkOption {
-                type = lib.types.nullOr lib.types.number;
-                default = null;
-                description = "Sampling temperature";
-              };
-
-              think = lib.mkOption {
-                type = lib.types.nullOr lib.types.bool;
-                default = null;
-                description = "Enable thinking mode for Anthropic models that support reasoning";
-              };
-
-              top_p = lib.mkOption {
-                type = lib.types.nullOr lib.types.number;
-                default = null;
-                description = "Top-p (nucleus) sampling parameter";
               };
 
               max_tokens = lib.mkOption {
@@ -73,10 +185,28 @@ lib.mkOption {
                 description = "Reasoning effort level for OpenAI models that support it";
               };
 
+              temperature = lib.mkOption {
+                type = lib.types.nullOr lib.types.number;
+                default = null;
+                description = "Sampling temperature";
+              };
+
+              think = lib.mkOption {
+                type = lib.types.nullOr lib.types.bool;
+                default = null;
+                description = "Enable thinking mode for Anthropic models that support reasoning";
+              };
+
               top_k = lib.mkOption {
                 type = lib.types.nullOr lib.types.int;
                 default = null;
                 description = "Top-k sampling parameter";
+              };
+
+              top_p = lib.mkOption {
+                type = lib.types.nullOr lib.types.number;
+                default = null;
+                description = "Top-p (nucleus) sampling parameter";
               };
 
             };
@@ -84,6 +214,161 @@ lib.mkOption {
         );
         default = { };
         description = "Model configurations for different model types";
+      };
+
+      options = lib.mkOption {
+        type = lib.types.submodule {
+          options = {
+            attribution = lib.mkOption {
+              type = lib.types.submodule {
+                options = {
+                  co_authored_by = lib.mkOption {
+                    type = lib.types.nullOr lib.types.bool;
+                    default = null;
+                    description = "Deprecated: use trailer_style instead";
+                  };
+
+                  generated_with = lib.mkOption {
+                    type = lib.types.nullOr lib.types.bool;
+                    default = true;
+                    description = "Add Generated with Crush line to commit messages and issues and PRs";
+                  };
+
+                  trailer_style = lib.mkOption {
+                    type = lib.types.nullOr (
+                      lib.types.enum [
+                        "none"
+                        "co-authored-by"
+                        "assisted-by"
+                      ]
+                    );
+                    default = "assisted-by";
+                    description = "Style of attribution trailer to add to commits";
+                  };
+
+                };
+              };
+              default = { };
+              description = "Attribution settings for generated content";
+            };
+
+            context_paths = lib.mkOption {
+              type = lib.types.nullOr lib.types.listOf lib.types.str;
+              default = null;
+              description = "Paths to files containing context information for the AI";
+            };
+
+            data_directory = lib.mkOption {
+              type = lib.types.nullOr lib.types.str;
+              default = ".crush";
+              description = "Directory for storing application data (relative to working directory)";
+            };
+
+            debug = lib.mkOption {
+              type = lib.types.nullOr lib.types.bool;
+              default = false;
+              description = "Enable debug logging";
+            };
+
+            debug_lsp = lib.mkOption {
+              type = lib.types.nullOr lib.types.bool;
+              default = false;
+              description = "Enable debug logging for LSP servers";
+            };
+
+            disable_auto_summarize = lib.mkOption {
+              type = lib.types.nullOr lib.types.bool;
+              default = false;
+              description = "Disable automatic conversation summarization";
+            };
+
+            disable_default_providers = lib.mkOption {
+              type = lib.types.nullOr lib.types.bool;
+              default = false;
+              description = "Ignore all default/embedded providers. When enabled";
+            };
+
+            disable_metrics = lib.mkOption {
+              type = lib.types.nullOr lib.types.bool;
+              default = false;
+              description = "Disable sending metrics";
+            };
+
+            disable_provider_auto_update = lib.mkOption {
+              type = lib.types.nullOr lib.types.bool;
+              default = false;
+              description = "Disable providers auto-update";
+            };
+
+            disabled_tools = lib.mkOption {
+              type = lib.types.nullOr lib.types.listOf lib.types.str;
+              default = null;
+              description = "List of built-in tools to disable and hide from the agent";
+            };
+
+            initialize_as = lib.mkOption {
+              type = lib.types.nullOr lib.types.str;
+              default = "AGENTS.md";
+              description = "Name of the context file to create/update during project initialization";
+            };
+
+            skills_paths = lib.mkOption {
+              type = lib.types.nullOr lib.types.listOf lib.types.str;
+              default = null;
+              description = "Paths to directories containing Agent Skills (folders with SKILL.md files)";
+            };
+
+            tui = lib.mkOption {
+              type = lib.types.submodule {
+                options = {
+                  compact_mode = lib.mkOption {
+                    type = lib.types.nullOr lib.types.bool;
+                    default = false;
+                    description = "Enable compact mode for the TUI interface";
+                  };
+
+                  completions = lib.mkOption {
+                    type = lib.types.submodule {
+                      options = {
+                        max_depth = lib.mkOption {
+                          type = lib.types.nullOr lib.types.int;
+                          default = 0;
+                          description = "Maximum depth for the ls tool";
+                        };
+
+                        max_items = lib.mkOption {
+                          type = lib.types.nullOr lib.types.int;
+                          default = 1000;
+                          description = "Maximum number of items to return for the ls tool";
+                        };
+
+                      };
+                    };
+                    default = { };
+                    description = "Completions UI options";
+                  };
+
+                  diff_mode = lib.mkOption {
+                    type = lib.types.nullOr (
+                      lib.types.enum [
+                        "unified"
+                        "split"
+                      ]
+                    );
+                    default = null;
+                    description = "Diff mode for the TUI interface";
+                  };
+
+                };
+              };
+              default = { };
+              description = "Terminal user interface options";
+            };
+
+          };
+        };
+        default = { };
+        description = "General application options";
       };
 
       permissions = lib.mkOption {
@@ -111,6 +396,18 @@ lib.mkOption {
                 description = "API key for authentication with the provider";
               };
 
+              base_url = lib.mkOption {
+                type = lib.types.nullOr lib.types.str;
+                default = null;
+                description = "Base URL for the provider's API";
+              };
+
+              disable = lib.mkOption {
+                type = lib.types.nullOr lib.types.bool;
+                default = false;
+                description = "Whether this provider is disabled";
+              };
+
               extra_body = lib.mkOption {
                 type = lib.types.nullOr lib.types.attrsOf lib.types.anything;
                 default = null;
@@ -123,10 +420,52 @@ lib.mkOption {
                 description = "Additional HTTP headers to send with requests";
               };
 
+              id = lib.mkOption {
+                type = lib.types.nullOr lib.types.str;
+                default = null;
+                description = "Unique identifier for the provider";
+              };
+
               models = lib.mkOption {
                 type = lib.types.listOf (
                   lib.types.submodule {
                     options = {
+                      can_reason = lib.mkOption {
+                        type = lib.types.nullOr lib.types.bool;
+                        default = null;
+                        description = "Can reason";
+                      };
+
+                      context_window = lib.mkOption {
+                        type = lib.types.nullOr lib.types.int;
+                        default = null;
+                        description = "Context window";
+                      };
+
+                      cost_per_1m_in = lib.mkOption {
+                        type = lib.types.nullOr lib.types.number;
+                        default = null;
+                        description = "Cost per 1m in";
+                      };
+
+                      cost_per_1m_in_cached = lib.mkOption {
+                        type = lib.types.nullOr lib.types.number;
+                        default = null;
+                        description = "Cost per 1m in cached";
+                      };
+
+                      cost_per_1m_out = lib.mkOption {
+                        type = lib.types.nullOr lib.types.number;
+                        default = null;
+                        description = "Cost per 1m out";
+                      };
+
+                      cost_per_1m_out_cached = lib.mkOption {
+                        type = lib.types.nullOr lib.types.number;
+                        default = null;
+                        description = "Cost per 1m out cached";
+                      };
+
                       default_max_tokens = lib.mkOption {
                         type = lib.types.nullOr lib.types.int;
                         default = null;
@@ -196,24 +535,6 @@ lib.mkOption {
                         description = "Options";
                       };
 
-                      context_window = lib.mkOption {
-                        type = lib.types.nullOr lib.types.int;
-                        default = null;
-                        description = "Context window";
-                      };
-
-                      cost_per_1m_in_cached = lib.mkOption {
-                        type = lib.types.nullOr lib.types.number;
-                        default = null;
-                        description = "Cost per 1m in cached";
-                      };
-
-                      cost_per_1m_out = lib.mkOption {
-                        type = lib.types.nullOr lib.types.number;
-                        default = null;
-                        description = "Cost per 1m out";
-                      };
-
                       reasoning_levels = lib.mkOption {
                         type = lib.types.nullOr lib.types.listOf lib.types.str;
                         default = null;
@@ -226,29 +547,17 @@ lib.mkOption {
                         description = "Supports attachments";
                       };
 
-                      can_reason = lib.mkOption {
-                        type = lib.types.nullOr lib.types.bool;
-                        default = null;
-                        description = "Can reason";
-                      };
-
-                      cost_per_1m_in = lib.mkOption {
-                        type = lib.types.nullOr lib.types.number;
-                        default = null;
-                        description = "Cost per 1m in";
-                      };
-
-                      cost_per_1m_out_cached = lib.mkOption {
-                        type = lib.types.nullOr lib.types.number;
-                        default = null;
-                        description = "Cost per 1m out cached";
-                      };
-
                     };
                   }
                 );
                 default = { };
                 description = "List of models available from this provider";
+              };
+
+              name = lib.mkOption {
+                type = lib.types.nullOr lib.types.str;
+                default = null;
+                description = "Human-readable name for the provider";
               };
 
               oauth = lib.mkOption {
@@ -290,6 +599,12 @@ lib.mkOption {
                 description = "Additional provider-specific options for this provider";
               };
 
+              system_prompt_prefix = lib.mkOption {
+                type = lib.types.nullOr lib.types.str;
+                default = null;
+                description = "Custom prefix to add to system prompts for this provider";
+              };
+
               type = lib.mkOption {
                 type = lib.types.nullOr (
                   lib.types.enum [
@@ -303,36 +618,6 @@ lib.mkOption {
                 );
                 default = "openai";
                 description = "Provider type that determines the API format";
-              };
-
-              base_url = lib.mkOption {
-                type = lib.types.nullOr lib.types.str;
-                default = null;
-                description = "Base URL for the provider's API";
-              };
-
-              disable = lib.mkOption {
-                type = lib.types.nullOr lib.types.bool;
-                default = false;
-                description = "Whether this provider is disabled";
-              };
-
-              id = lib.mkOption {
-                type = lib.types.nullOr lib.types.str;
-                default = null;
-                description = "Unique identifier for the provider";
-              };
-
-              name = lib.mkOption {
-                type = lib.types.nullOr lib.types.str;
-                default = null;
-                description = "Human-readable name for the provider";
-              };
-
-              system_prompt_prefix = lib.mkOption {
-                type = lib.types.nullOr lib.types.str;
-                default = null;
-                description = "Custom prefix to add to system prompts for this provider";
               };
 
             };
@@ -376,291 +661,6 @@ lib.mkOption {
         };
         default = { };
         description = "Tool configurations";
-      };
-
-      mcp = lib.mkOption {
-        type = lib.types.attrsOf (
-          lib.types.submodule {
-            options = {
-              url = lib.mkOption {
-                type = lib.types.nullOr lib.types.str;
-                default = null;
-                description = "URL for HTTP or SSE MCP servers";
-              };
-
-              command = lib.mkOption {
-                type = lib.types.nullOr lib.types.str;
-                default = null;
-                description = "Command to execute for stdio MCP servers";
-              };
-
-              disabled = lib.mkOption {
-                type = lib.types.nullOr lib.types.bool;
-                default = false;
-                description = "Whether this MCP server is disabled";
-              };
-
-              disabled_tools = lib.mkOption {
-                type = lib.types.nullOr lib.types.listOf lib.types.str;
-                default = null;
-                description = "List of tools from this MCP server to disable";
-              };
-
-              timeout = lib.mkOption {
-                type = lib.types.nullOr lib.types.int;
-                default = 15;
-                description = "Timeout in seconds for MCP server connections";
-              };
-
-              type = lib.mkOption {
-                type = lib.types.nullOr (
-                  lib.types.enum [
-                    "stdio"
-                    "sse"
-                    "http"
-                  ]
-                );
-                default = "stdio";
-                description = "Type of MCP connection";
-              };
-
-              args = lib.mkOption {
-                type = lib.types.nullOr lib.types.listOf lib.types.str;
-                default = null;
-                description = "Arguments to pass to the MCP server command";
-              };
-
-              env = lib.mkOption {
-                type = lib.types.nullOr lib.types.attrsOf lib.types.anything;
-                default = null;
-                description = "Environment variables to set for the MCP server";
-              };
-
-              headers = lib.mkOption {
-                type = lib.types.nullOr lib.types.attrsOf lib.types.anything;
-                default = null;
-                description = "HTTP headers for HTTP/SSE MCP servers";
-              };
-
-            };
-          }
-        );
-        default = { };
-        description = "Model Context Protocol server configurations";
-      };
-
-      options = lib.mkOption {
-        type = lib.types.submodule {
-          options = {
-            disabled_tools = lib.mkOption {
-              type = lib.types.nullOr lib.types.listOf lib.types.str;
-              default = null;
-              description = "List of built-in tools to disable and hide from the agent";
-            };
-
-            initialize_as = lib.mkOption {
-              type = lib.types.nullOr lib.types.str;
-              default = "AGENTS.md";
-              description = "Name of the context file to create/update during project initialization";
-            };
-
-            skills_paths = lib.mkOption {
-              type = lib.types.nullOr lib.types.listOf lib.types.str;
-              default = null;
-              description = "Paths to directories containing Agent Skills (folders with SKILL.md files)";
-            };
-
-            attribution = lib.mkOption {
-              type = lib.types.submodule {
-                options = {
-                  co_authored_by = lib.mkOption {
-                    type = lib.types.nullOr lib.types.bool;
-                    default = null;
-                    description = "Deprecated: use trailer_style instead";
-                  };
-
-                  generated_with = lib.mkOption {
-                    type = lib.types.nullOr lib.types.bool;
-                    default = true;
-                    description = "Add Generated with Crush line to commit messages and issues and PRs";
-                  };
-
-                  trailer_style = lib.mkOption {
-                    type = lib.types.nullOr (
-                      lib.types.enum [
-                        "none"
-                        "co-authored-by"
-                        "assisted-by"
-                      ]
-                    );
-                    default = "assisted-by";
-                    description = "Style of attribution trailer to add to commits";
-                  };
-
-                };
-              };
-              default = { };
-              description = "Attribution settings for generated content";
-            };
-
-            context_paths = lib.mkOption {
-              type = lib.types.nullOr lib.types.listOf lib.types.str;
-              default = null;
-              description = "Paths to files containing context information for the AI";
-            };
-
-            debug = lib.mkOption {
-              type = lib.types.nullOr lib.types.bool;
-              default = false;
-              description = "Enable debug logging";
-            };
-
-            disable_auto_summarize = lib.mkOption {
-              type = lib.types.nullOr lib.types.bool;
-              default = false;
-              description = "Disable automatic conversation summarization";
-            };
-
-            disable_default_providers = lib.mkOption {
-              type = lib.types.nullOr lib.types.bool;
-              default = false;
-              description = "Ignore all default/embedded providers. When enabled";
-            };
-
-            disable_metrics = lib.mkOption {
-              type = lib.types.nullOr lib.types.bool;
-              default = false;
-              description = "Disable sending metrics";
-            };
-
-            disable_provider_auto_update = lib.mkOption {
-              type = lib.types.nullOr lib.types.bool;
-              default = false;
-              description = "Disable providers auto-update";
-            };
-
-            tui = lib.mkOption {
-              type = lib.types.submodule {
-                options = {
-                  compact_mode = lib.mkOption {
-                    type = lib.types.nullOr lib.types.bool;
-                    default = false;
-                    description = "Enable compact mode for the TUI interface";
-                  };
-
-                  completions = lib.mkOption {
-                    type = lib.types.submodule {
-                      options = {
-                        max_depth = lib.mkOption {
-                          type = lib.types.nullOr lib.types.int;
-                          default = 0;
-                          description = "Maximum depth for the ls tool";
-                        };
-
-                        max_items = lib.mkOption {
-                          type = lib.types.nullOr lib.types.int;
-                          default = 1000;
-                          description = "Maximum number of items to return for the ls tool";
-                        };
-
-                      };
-                    };
-                    default = { };
-                    description = "Completions UI options";
-                  };
-
-                  diff_mode = lib.mkOption {
-                    type = lib.types.nullOr (
-                      lib.types.enum [
-                        "unified"
-                        "split"
-                      ]
-                    );
-                    default = null;
-                    description = "Diff mode for the TUI interface";
-                  };
-
-                };
-              };
-              default = { };
-              description = "Terminal user interface options";
-            };
-
-            data_directory = lib.mkOption {
-              type = lib.types.nullOr lib.types.str;
-              default = ".crush";
-              description = "Directory for storing application data (relative to working directory)";
-            };
-
-            debug_lsp = lib.mkOption {
-              type = lib.types.nullOr lib.types.bool;
-              default = false;
-              description = "Enable debug logging for LSP servers";
-            };
-
-          };
-        };
-        default = { };
-        description = "General application options";
-      };
-
-      lsp = lib.mkOption {
-        type = lib.types.attrsOf (
-          lib.types.submodule {
-            options = {
-              options = lib.mkOption {
-                type = lib.types.nullOr lib.types.attrsOf lib.types.anything;
-                default = null;
-                description = "LSP server-specific settings passed during initialization";
-              };
-
-              root_markers = lib.mkOption {
-                type = lib.types.nullOr lib.types.listOf lib.types.str;
-                default = null;
-                description = "Files or directories that indicate the project root";
-              };
-
-              args = lib.mkOption {
-                type = lib.types.nullOr lib.types.listOf lib.types.str;
-                default = null;
-                description = "Arguments to pass to the LSP server command";
-              };
-
-              command = lib.mkOption {
-                type = lib.types.nullOr lib.types.str;
-                default = null;
-                description = "Command to execute for the LSP server";
-              };
-
-              disabled = lib.mkOption {
-                type = lib.types.nullOr lib.types.bool;
-                default = false;
-                description = "Whether this LSP server is disabled";
-              };
-
-              env = lib.mkOption {
-                type = lib.types.nullOr lib.types.attrsOf lib.types.anything;
-                default = null;
-                description = "Environment variables to set to the LSP server command";
-              };
-
-              filetypes = lib.mkOption {
-                type = lib.types.nullOr lib.types.listOf lib.types.str;
-                default = null;
-                description = "File types this LSP server handles";
-              };
-
-              init_options = lib.mkOption {
-                type = lib.types.nullOr lib.types.attrsOf lib.types.anything;
-                default = null;
-                description = "Initialization options passed to the LSP server during initialize request";
-              };
-
-            };
-          }
-        );
-        default = { };
-        description = "Language Server Protocol configurations";
       };
 
     };
