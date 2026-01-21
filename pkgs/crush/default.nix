@@ -5,6 +5,8 @@
   fetchurl,
   installShellFiles,
   stdenvNoCC,
+  stdenv,
+  autoPatchelfHook,
 }:
 let
   inherit (stdenvNoCC.hostPlatform) system;
@@ -44,7 +46,11 @@ stdenvNoCC.mkDerivation {
 
   sourceRoot = sourceRootMap.${system};
 
-  nativeBuildInputs = [ installShellFiles ];
+  nativeBuildInputs = [ installShellFiles autoPatchelfHook ];
+
+  buildInputs = lib.optionals stdenvNoCC.isLinux [
+    stdenv.cc.cc.lib
+  ];
 
   installPhase = ''
     mkdir -p $out/bin
