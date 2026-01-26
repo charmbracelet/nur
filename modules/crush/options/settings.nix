@@ -38,13 +38,13 @@ lib.mkOption {
               };
 
               init_options = lib.mkOption {
-                type = lib.types.nullOr lib.types.attrsOf lib.types.anything;
+                type = lib.types.nullOr (lib.types.attrsOf lib.types.anything);
                 default = null;
                 description = "Initialization options passed to the LSP server during initialize request";
               };
 
               options = lib.mkOption {
-                type = lib.types.nullOr lib.types.attrsOf lib.types.anything;
+                type = lib.types.nullOr (lib.types.attrsOf lib.types.anything);
                 default = null;
                 description = "LSP server-specific settings passed during initialization";
               };
@@ -168,7 +168,7 @@ lib.mkOption {
               };
 
               provider_options = lib.mkOption {
-                type = lib.types.nullOr lib.types.attrsOf lib.types.anything;
+                type = lib.types.nullOr (lib.types.attrsOf lib.types.anything);
                 default = null;
                 description = "Additional provider-specific options for the model";
               };
@@ -409,7 +409,7 @@ lib.mkOption {
               };
 
               extra_body = lib.mkOption {
-                type = lib.types.nullOr lib.types.attrsOf lib.types.anything;
+                type = lib.types.nullOr (lib.types.attrsOf lib.types.anything);
                 default = null;
                 description = "Additional fields to include in request bodies";
               };
@@ -506,7 +506,7 @@ lib.mkOption {
                             };
 
                             provider_options = lib.mkOption {
-                              type = lib.types.nullOr lib.types.attrsOf lib.types.anything;
+                              type = lib.types.nullOr (lib.types.attrsOf lib.types.anything);
                               default = null;
                               description = "Provider options";
                             };
@@ -594,7 +594,7 @@ lib.mkOption {
               };
 
               provider_options = lib.mkOption {
-                type = lib.types.nullOr lib.types.attrsOf lib.types.anything;
+                type = lib.types.nullOr (lib.types.attrsOf lib.types.anything);
                 default = null;
                 description = "Additional provider-specific options for this provider";
               };
@@ -625,12 +625,6 @@ lib.mkOption {
         );
         default = { };
         description = "AI provider configurations";
-      };
-
-      recent_models = lib.mkOption {
-        type = lib.types.nullOr lib.types.attrsOf lib.types.anything;
-        default = null;
-        description = "Recently used models sorted by most recent first";
       };
 
       tools = lib.mkOption {
