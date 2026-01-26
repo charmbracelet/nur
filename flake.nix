@@ -10,7 +10,11 @@
   };
 
   outputs =
-    { self, nixpkgs, treefmt-nix }:
+    {
+      self,
+      nixpkgs,
+      treefmt-nix,
+    }:
     let
       systems = [
         "x86_64-linux"
@@ -25,15 +29,17 @@
 
       modules = import ./modules;
 
-      pkgs = forAllSystems ( system: import nixpkgs { inherit system; } );
+      pkgs = forAllSystems (system: import nixpkgs { inherit system; });
 
-      treefmt = system: treefmt-nix.lib.evalModule pkgs.${system} {
-        projectRootFile = "flake.nix";
-        programs = {
-          gofmt.enable = true;
-          nixfmt.enable = true;
+      treefmt =
+        system:
+        treefmt-nix.lib.evalModule pkgs.${system} {
+          projectRootFile = "flake.nix";
+          programs = {
+            gofmt.enable = true;
+            nixfmt.enable = true;
+          };
         };
-      };
     in
     {
       legacyPackages = forAllSystems (
@@ -47,7 +53,7 @@
         system: nixpkgs.lib.filterAttrs (_: v: nixpkgs.lib.isDerivation v) self.legacyPackages.${system}
       );
 
-      formatter = forAllSystems ( system: (treefmt system).config.build.wrapper ); 
+      formatter = forAllSystems (system: (treefmt system).config.build.wrapper);
 
       nixosModules = modules.nixos;
       homeModules = modules.homeManager;
