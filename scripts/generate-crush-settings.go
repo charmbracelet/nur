@@ -414,7 +414,7 @@ func generateOptions(props map[string]*Property, schema *Schema, indent string) 
 				continue
 			}
 
-			opt.Type = "lib.types.attrsOf lib.types.anything"
+			opt.Type = "(lib.types.attrsOf lib.types.anything)"
 			if defaultVal != nil {
 				opt.Default = "{ }"
 			}
