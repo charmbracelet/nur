@@ -29,10 +29,6 @@ jobs:
         run: |
           cd scripts && go generate
 
-      - name: Format settings file
-        run: |
-          nix fmt modules/crush/options/settings.nix
-
       - name: Check for changes
         id: check_changes
         run: |
