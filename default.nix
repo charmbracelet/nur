@@ -17,19 +17,5 @@
   modules = import ./modules; # NixOS modules
   overlays = import ./overlays; # nixpkgs overlays
 
-  charm = pkgs.callPackage ./pkgs/charm { };
-  confettysh = pkgs.callPackage ./pkgs/confettysh { };
-  crush = pkgs.callPackage ./pkgs/crush { };
-  freeze = pkgs.callPackage ./pkgs/freeze { };
-  glow = pkgs.callPackage ./pkgs/glow { };
-  gum = pkgs.callPackage ./pkgs/gum { };
-  markscribe = pkgs.callPackage ./pkgs/markscribe { };
-  melt = pkgs.callPackage ./pkgs/melt { };
-  mods = pkgs.callPackage ./pkgs/mods { };
-  pop = pkgs.callPackage ./pkgs/pop { };
-  sequin = pkgs.callPackage ./pkgs/sequin { };
-  skate = pkgs.callPackage ./pkgs/skate { };
-  soft-serve = pkgs.callPackage ./pkgs/soft-serve { };
-  vhs = pkgs.callPackage ./pkgs/vhs { };
-  wishlist = pkgs.callPackage ./pkgs/wishlist { };
+  packages = import ./pkgs { inherit pkgs; };
 }
