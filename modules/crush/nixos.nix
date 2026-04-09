@@ -8,7 +8,7 @@ let
   cfg = config.programs.crush;
   charmLib = import ../../lib { inherit pkgs; };
 in {
-  options = import ./options { inherit pkgs; };
+  options.programs.crush = import ./options { inherit pkgs; };
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [ cfg.package ];
