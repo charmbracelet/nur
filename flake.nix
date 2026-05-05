@@ -37,11 +37,11 @@
           projectRootFile = "flake.nix";
           programs = {
             gofmt.enable = true;
-            nixfmt = {
-              enable = true;
-              excludes = [ "pkgs/*" ]; # exclude generated packages
-            };
+            nixfmt.enable = true;
           };
+          settings.formatter.nixfmt.excludes = [
+            "pkgs/**"
+          ];
         };
     in
     {
