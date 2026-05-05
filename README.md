@@ -68,7 +68,7 @@ Add the flake as an input and include the desired module in your nix-darwin conf
 inputs = {
   nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   nix-darwin = {
-    url = "github:LnL7/nix-darwin";
+    url = "github:nix-darwin/nix-darwin";
     inputs.nixpkgs.follows = "nixpkgs";
   };
   nur = {
@@ -79,8 +79,7 @@ inputs = {
 
 outputs = { self, nixpkgs, nur, nix-darwin, ... }:
 {
-  darwinConfigurations.example = nix-darwin.lib.darwinSystem {
-    inherit system;
+  darwinConfigurations.example = nix-darwin.lib.evalConfig {
     modules = [
       nur.darwinModules.crush
       { programs.crush.enable = true; }
