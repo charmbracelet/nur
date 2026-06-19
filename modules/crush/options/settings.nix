@@ -464,6 +464,29 @@ lib.mkOption {
                 description = "API key for authentication with the provider";
               };
 
+              api_key_command = lib.mkOption {
+                type = lib.types.nullOr lib.types.str;
+                default = null;
+                description = ''
+                  Shell command whose stdout provides the API key. The command
+                  is executed at runtime; crush reads the first line of output
+                  as the key. Takes precedence over api_key but not
+                  api_key_file.
+                '';
+              };
+
+              api_key_file = lib.mkOption {
+                type = lib.types.nullOr lib.types.path;
+                default = null;
+                description = ''
+                  Path to a file containing the API key. The first line of the
+                  file is read as the key. Takes precedence over both api_key
+                  and api_key_command. Use this to reference secrets managed by
+                  agenix, sops-nix, or similar tools without storing the key in
+                  the Nix store.
+                '';
+              };
+
               base_url = lib.mkOption {
                 type = lib.types.nullOr lib.types.str;
                 default = null;
