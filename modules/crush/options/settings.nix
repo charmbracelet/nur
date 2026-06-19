@@ -476,7 +476,7 @@ lib.mkOption {
               };
 
               api_key_file = lib.mkOption {
-                type = lib.types.nullOr lib.types.path;
+                type = lib.types.nullOr lib.types.str;
                 default = null;
                 description = ''
                   Path to a file containing the API key. The first line of the
