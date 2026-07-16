@@ -66,5 +66,9 @@
       nixosModules = modules.nixos;
       homeModules = modules.homeManager;
       darwinModules = modules.darwin;
+
+      checks = forAllSystems (system: {
+        crush-lib = import ./tests/crush-lib/default.nix { pkgs = pkgs.${system}; };
+      });
     };
 }
